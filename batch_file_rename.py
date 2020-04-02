@@ -1,23 +1,27 @@
 import os
 
+
+# sorted by create time
 def get_file_list(work_dir):
     dir_list = os.listdir(work_dir)
     if not dir_list:
         return
     else:
-        dir_list = sorted(dir_list, key=lambda x: os.path.getctime(os.path.join(work_dir,x)))
+        dir_list = sorted(
+            dir_list,
+            key=lambda x: os.path.getctime(os.path.join(work_dir, x)))
         return dir_list
+
 
 def batch_rename(work_dir, *new_name_list):
     files = get_file_list(work_dir)
     i = 0
     for item in files:
         if item.endswith(str.upper('csv')) and new_name_list[0][i]:
-            os.rename(
-                os.path.join(work_dir, item),
-                os.path.join(work_dir,new_name_list[0][i])
-            )
+            os.rename(os.path.join(work_dir, item),
+                      os.path.join(work_dir, new_name_list[0][i]))
         i += 1
+
 
 def main():
     new_names = []
@@ -29,6 +33,7 @@ def main():
 
     path = 'c:/Users/sixpl/Desktop/Desktop/0/库存分析/'
     batch_rename(path, new_names)
+
 
 if __name__ == "__main__":
     main()
