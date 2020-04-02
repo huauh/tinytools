@@ -1,25 +1,21 @@
-import os
+from pathlib import Path, PurePath
 
 
 # sorted by create time
-def get_file_list(work_dir):
-    dir_list = os.listdir(work_dir)
-    if not dir_list:
+def get_dirs(work_dir):
+    dirs = Path(work_dir).iterdir()
+
+    if not dirs:
         return
     else:
-        dir_list = sorted(
-            dir_list,
-            key=lambda x: os.path.getctime(os.path.join(work_dir, x)))
-        return dir_list
+        return sorted(dirs, key=lambda x: x.stat().st_ctime)
 
 
-def batch_rename(work_dir, *new_name_list):
-    files = get_file_list(work_dir)
+def batch_rename(work_dir, *new_names):
     i = 0
-    for item in files:
-        if item.endswith(str.upper('csv')) and new_name_list[0][i]:
-            os.rename(os.path.join(work_dir, item),
-                      os.path.join(work_dir, new_name_list[0][i]))
+    for item in get_dirs(work_dir):
+        if str.lower(item.name).endswith('csv') and new_names[i]:
+            item.rename(PurePath(work_dir, new_names[i]))
         i += 1
 
 
@@ -32,7 +28,7 @@ def main():
     new_names.append('O6_产品数据.CSV')
 
     path = 'c:/Users/sixpl/Desktop/Desktop/0/库存分析/'
-    batch_rename(path, new_names)
+    batch_rename(path, *new_names)
 
 
 if __name__ == "__main__":
