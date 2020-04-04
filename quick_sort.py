@@ -12,6 +12,7 @@ def quick_sort(array):
     return quick_sort(less) + [pivot] + quick_sort(greater)
 
 
+# Practice
 def main():
     array = [45, 3, 73, 34, 7, 2, 90, 456, 23]
     print(quick_sort(array))
