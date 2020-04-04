@@ -9,6 +9,7 @@ def batch_rename(source_dir, *targets):
         if targets[i].exists():
             with targets[i].open(mode='wb') as fid:
                 fid.write(item.read_bytes())
+                # TODO:如果是库存表，复制一份到文件夹【每日库存】
             item.unlink()
         else:
             print('目标文件不存在==> {target_path}'.format(
