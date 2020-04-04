@@ -1,4 +1,5 @@
 from pathlib import Path, PurePath
+from datetime import datetime
 
 
 def batch_rename(source_dir, *targets):
@@ -7,9 +8,18 @@ def batch_rename(source_dir, *targets):
     i = 0
     for item in dirs:
         if targets[i].exists():
-            with targets[i].open(mode='wb') as fid:
-                fid.write(item.read_bytes())
-                # TODO:如果是库存表，复制一份到文件夹【每日库存】
+            with targets[i].open(mode='wb') as f:
+                f.write(item.read_bytes())
+
+            # copy 库存表 to fold 每日库存
+            if targets[i].match('*O1_仓库库存*'):
+                new_name = targets[i].stem + '-' + datetime.now().strftime(
+                    '%Y%m%d') + targets[i].suffix
+                new_file = targets[i].parent / '每日库存' / new_name
+                with new_file.open(mode='wb') as f:
+                    f.write(targets[i].read_bytes())
+
+            # delete the source file
             item.unlink()
         else:
             print('目标文件不存在==> {target_path}'.format(
