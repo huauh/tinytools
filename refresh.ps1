@@ -1,9 +1,15 @@
 #VARIABLES
+$xlCalculationManual = -4135
+$xlCalculationAutomatic = -4105
 $files = @(
     "e:\FangCloudV2\杭州初慕\初慕表格系统\库存分析\资料链接\采购分析\销量明细表\销量明细-2020.xlsx", 
     "e:\FangCloudV2\杭州初慕\初慕表格系统\库存分析\资料链接\采购分析\O2_销量分析.xlsx", 
     "e:\FangCloudV2\杭州初慕\初慕表格系统\库存分析\资料链接\采购分析\O2_销量图表.xlsm", 
     "e:\FangCloudV2\杭州初慕\初慕表格系统\库存分析\资料链接\采购分析\O3_追单日常.xlsx"
+)
+$files = @(
+    "e:\FangCloudV2\杭州初慕\初慕表格系统\库存分析\资料链接\O5_产品信息表.xlsm",
+    "e:\FangCloudV2\杭州初慕\初慕表格系统\库存分析\资料链接\O3_下单明细表.xlsm"
 )
 $Date = (Get-Date -Format 'yyyyMMdd-HHmm')
 $errorFile = "C:\Temp\RefreshExcelError_" + $Date + ".txt" #Where you want an error file to be generated.
@@ -80,16 +86,26 @@ foreach ($file in $files) {
 
         #Open the workbook
         $workBook = $excelObj.Workbooks.Open($file)
+        #Speed up calculation
+        $excelObj.Calculation = $xlCalculationManual
 		
-        #Refresh all data in workbook.
+        #Refresh all data twice in workbook.
         Write-Host "Starting refresh..." -nonewline
-        $workBook.RefreshAll()
-        $conn = $Workbook.Connections
-        while ($conn | ForEach-Object { if ($_.OLEDBConnection.Refreshing) { $true } }) {
-            Start-Sleep -Seconds 1
-        }
+        $i = 1
+        Do {
+            $workBook.RefreshAll()
+            $conn = $Workbook.Connections
+            while ($conn | ForEach-Object { if ($_.OLEDBConnection.Refreshing) { $true } }) {
+                Start-Sleep -Seconds 1
+            }
+            $i++
+        } while ($i -le 1)
         Write-Host "done." 
-		
+
+        Write-Host "Starting Calculate..." -NoNewline
+        $excelObj.Calculation = $xlCalculationAutomatic
+        Write-Host "done."
+
         Write-Host "Saving file..." -nonewline
         $workBook.Save()
         Write-Host "done." 
@@ -109,8 +125,7 @@ foreach ($file in $files) {
     Write-Host -ForegroundColor Red ('Total Runtime: ' + ($end - $start).TotalSeconds)
     Write-Host "`n"
 }
-
-Write-Host "`n"
+#Write-Host "`n"
 
 #If an anticipated error found above, open the error file.
 IF ($isError) {
