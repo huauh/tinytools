@@ -1,16 +1,19 @@
-#VARIABLES
+ï»¿#VARIABLES
 $xlCalculationManual = -4135
 $xlCalculationAutomatic = -4105
-$files = @(
-    "e:\FangCloudV2\º¼ÖÝ³õÄ½\³õÄ½±í¸ñÏµÍ³\¿â´æ·ÖÎö\×ÊÁÏÁ´½Ó\²É¹º·ÖÎö\ÏúÁ¿Ã÷Ï¸±í\ÏúÁ¿Ã÷Ï¸-2020.xlsx", 
-    "e:\FangCloudV2\º¼ÖÝ³õÄ½\³õÄ½±í¸ñÏµÍ³\¿â´æ·ÖÎö\×ÊÁÏÁ´½Ó\²É¹º·ÖÎö\O2_ÏúÁ¿·ÖÎö.xlsx", 
-    "e:\FangCloudV2\º¼ÖÝ³õÄ½\³õÄ½±í¸ñÏµÍ³\¿â´æ·ÖÎö\×ÊÁÏÁ´½Ó\²É¹º·ÖÎö\O2_ÏúÁ¿Í¼±í.xlsm", 
-    "e:\FangCloudV2\º¼ÖÝ³õÄ½\³õÄ½±í¸ñÏµÍ³\¿â´æ·ÖÎö\×ÊÁÏÁ´½Ó\²É¹º·ÖÎö\O3_×·µ¥ÈÕ³£.xlsx"
+$listOne= @(
+    "e:\FangCloudV2\æ­å·žåˆæ…•\åˆæ…•è¡¨æ ¼ç³»ç»Ÿ\åº“å­˜åˆ†æž\èµ„æ–™é“¾æŽ¥\é‡‡è´­åˆ†æž\é”€é‡æ˜Žç»†è¡¨\é”€é‡æ˜Žç»†-2020.xlsx", 
+    "e:\FangCloudV2\æ­å·žåˆæ…•\åˆæ…•è¡¨æ ¼ç³»ç»Ÿ\åº“å­˜åˆ†æž\èµ„æ–™é“¾æŽ¥\é‡‡è´­åˆ†æž\O2_é”€é‡åˆ†æž.xlsx", 
+    "e:\FangCloudV2\æ­å·žåˆæ…•\åˆæ…•è¡¨æ ¼ç³»ç»Ÿ\åº“å­˜åˆ†æž\èµ„æ–™é“¾æŽ¥\é‡‡è´­åˆ†æž\O2_é”€é‡å›¾è¡¨.xlsm", 
+    "e:\FangCloudV2\æ­å·žåˆæ…•\åˆæ…•è¡¨æ ¼ç³»ç»Ÿ\åº“å­˜åˆ†æž\èµ„æ–™é“¾æŽ¥\é‡‡è´­åˆ†æž\O3_è¿½å•æ—¥å¸¸.xlsx"
 )
-$files = @(
-    "e:\FangCloudV2\º¼ÖÝ³õÄ½\³õÄ½±í¸ñÏµÍ³\¿â´æ·ÖÎö\×ÊÁÏÁ´½Ó\O5_²úÆ·ÐÅÏ¢±í.xlsm",
-    "e:\FangCloudV2\º¼ÖÝ³õÄ½\³õÄ½±í¸ñÏµÍ³\¿â´æ·ÖÎö\×ÊÁÏÁ´½Ó\O3_ÏÂµ¥Ã÷Ï¸±í.xlsm"
+$listTwo= @(
+    "e:\FangCloudV2\æ­å·žåˆæ…•\åˆæ…•è¡¨æ ¼ç³»ç»Ÿ\åº“å­˜åˆ†æž\èµ„æ–™é“¾æŽ¥\O5_äº§å“ä¿¡æ¯è¡¨.xlsm",
+    "e:\FangCloudV2\æ­å·žåˆæ…•\åˆæ…•è¡¨æ ¼ç³»ç»Ÿ\åº“å­˜åˆ†æž\èµ„æ–™é“¾æŽ¥\O3_ä¸‹å•æ˜Žç»†è¡¨.xlsm"
 )
+$files = $listTwo
+$files = $listOne
+
 $Date = (Get-Date -Format 'yyyyMMdd-HHmm')
 $errorFile = "C:\Temp\RefreshExcelError_" + $Date + ".txt" #Where you want an error file to be generated.
 $isError = $false

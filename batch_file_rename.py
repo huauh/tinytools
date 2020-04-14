@@ -10,6 +10,7 @@ def batch_rename(source_dir, *targets):
         if targets[i].exists():
             with targets[i].open(mode='wb') as f:
                 f.write(item.read_bytes())
+                print("Updated {file}".format(file=targets[i].as_posix()))
 
             # copy 库存表 to fold 每日库存
             if targets[i].match('*O1_仓库库存*'):
@@ -18,6 +19,7 @@ def batch_rename(source_dir, *targets):
                 new_file = targets[i].parent / '每日库存' / new_name
                 with new_file.open(mode='wb') as f:
                     f.write(targets[i].read_bytes())
+                    print("Added {file}".format(file=new_file.as_posix()))
 
             # delete the source file
             item.unlink()

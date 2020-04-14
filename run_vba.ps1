@@ -1,13 +1,9 @@
-﻿#VARIABLES
+﻿param(
+    [string]$files=$(throw "Parameter missing: -f File")
+)
+#VARIABLES
 $xlCalculationManual = -4135
 $xlCalculationAutomatic = -4105
-
-$listTwo= @(
-    "e:\FangCloudV2\杭州初慕\初慕表格系统\库存分析\资料链接\O3_下单明细表.xlsm",
-    "e:\FangCloudV2\杭州初慕\初慕表格系统\库存分析\资料链接\O5_产品信息表.xlsm",
-    "e:\FangCloudV2\杭州初慕\初慕表格系统\库存分析\库存分析.xlsm"
-)
-$files = $listTwo
 
 $Date = (Get-Date -Format 'yyyyMMdd-HHmm')
 $errorFile = "C:\Temp\RefreshExcelError_" + $Date + ".txt" #Where you want an error file to be generated.
