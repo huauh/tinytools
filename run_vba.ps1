@@ -76,9 +76,14 @@ foreach ($file in $files) {
     ELSE {	
         #File is NOT locked.
         Write-Host "file available."		
-        $excelObj = New-Object -ComObject Excel.Application
+        $excelObj = New-Object -ComObject Excel.Application -ea Stop
         $excelObj.Visible = $false
+        $excelObj.DisplayAlerts = $false
+        $excelObj.ScreenUpdating = $false
         $workBook = $excelObj.Workbooks.Open($file)
+        while (-not $excelObj.Ready) {
+            Start-Sleep -Seconds 1
+        }
         if($file.Contains("库存分析.xlsm")) {
             $ws = $workBook.worksheets.item(1)
             Write-Host "Starting run macro..." -nonewline
@@ -113,6 +118,7 @@ foreach ($file in $files) {
         $excelObj = $null
     }
     ## close all object references
+    
     Release-Ref($workBook)
     Release-Ref($excelObj)
     $end = Get-Date
