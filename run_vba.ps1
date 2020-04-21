@@ -77,7 +77,7 @@ foreach ($file in $files) {
         #File is NOT locked.
         Write-Host "file available."		
         $excelObj = New-Object -ComObject Excel.Application -ea Stop
-        $excelObj.Visible = $false
+        $excelObj.Visible = $true
         $excelObj.DisplayAlerts = $false
         $excelObj.ScreenUpdating = $false
         $workBook = $excelObj.Workbooks.Open($file)
