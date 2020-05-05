@@ -40,7 +40,7 @@ def main():
     targets.append(path_one / 'O1_仓库库存.CSV')
     targets.append(path_one / 'O2_销量明细.CSV')
     targets.append(path_one / 'O4_本年销量.CSV')
-    targets.append(path_two / '销量明细-202004.CSV')
+    targets.append(path_two / '销量明细-202005.CSV')
     targets.append(path_one / 'O6_产品数据.CSV')
     targets.append(Path.cwd().parent.joinpath('网店产品.CSV'))
 
