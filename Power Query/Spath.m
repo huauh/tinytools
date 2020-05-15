@@ -13,7 +13,7 @@ let
             [
                 Description = "从路径总表(PathTable)，获取产品表(Flag)的绝对路径",
                 Code = "Spath(""路径总表"",""产品表"")",
-                Result = "E:\FangCloudV2\杭州初慕\初慕表格系统\库存分析\资料链接\O5_产品信息表.xlsm"
+                Result = "E:\目录1\目录2\目录3\目录4\资料链接\O5_产品信息表.xlsm"
             ]
         }
     ]
