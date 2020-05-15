@@ -2,5 +2,6 @@
     "python.formatting.provider": "yapf",
     "cSpell.words": [
         "xlsx"
-    ]
+    ],
+    "python.pythonPath": "D:\\ProgramData\\Anaconda3\\python.exe"
 }

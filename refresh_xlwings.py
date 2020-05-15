@@ -1,24 +1,26 @@
-import win32com.client as win32
 from pathlib import Path
+import xlwings as xw
+
+# import os
+# os.path.exists('T:\\')
 
 
-def daily_refresh(full_name):
+def daily_refresh(workbook):
 
     # Start an instance of Excel
-    xlapp = win32.DispatchEx("Excel.Application")
+    xlapp = xw.App(visible=False)
 
     # Open the workbook in said instance of Excel
-    wb = xlapp.workbooks.open(full_name)
-    xlapp.DisplayAlerts = False
-    xlapp.Visible = True
+    wb = xw.Book(workbook)
+    wb.app.calculation = 'manual'
 
     # Refresh all data connections.
-    wb.RefreshAll()
-    # xlapp.CalculateUntilAsyncQueriesDone()
-    wb.Close(True)
+    wb.api.RefreshAll()
+    wb.app.calculate()
+    wb.save()
 
     # Quit
-    xlapp.Quit()
+    xlapp.kill()
 
     # Make sure Excel completely closes
     del wb
@@ -38,8 +40,8 @@ def main():
     counter = 1
     for file in targets:
         daily_refresh(file.as_posix())
-        print('File {complete_num} of {total_num} completed.'.format(
-            complete_num=counter, total_num=len(targets)))
+        print('File ' + str(counter) + ' of ' + str(len(targets)) +
+              ' completed.')
         counter += 1
 
 

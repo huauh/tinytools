@@ -1,5 +1,5 @@
 ﻿param(
-    [string]$files=$(throw "Parameter missing: -f File")
+    [string]$files = $(throw "Parameter missing: -f File")
 )
 #VARIABLES
 $xlCalculationManual = -4135
@@ -84,28 +84,52 @@ foreach ($file in $files) {
         while (-not $excelObj.Ready) {
             Start-Sleep -Seconds 1
         }
-        if($file.Contains("库存分析.xlsm")) {
+        if ($file.Contains("库存分析.xlsm")) {
             $ws = $workBook.worksheets.item(1)
             Write-Host "Starting run macro..." -nonewline
             $excelObj.Run("Init")
+            while ($excelObj.CalculationState -ne "xldone") {
+                Start-Sleep -Seconds 5
+            }
             Release-Ref($ws)
             Write-Host "done." 
-        }else{
-            $excelObj.Calculation = $xlCalculationManual #Speed up calculation        
+        }
+        else {    
             Write-Host "Starting refresh..." -nonewline
+            $excelObj.Calculation = $xlCalculationManual #Speed up calculation    
+            # foreach ($Sheet in $workBook.Worksheets) {
+            #     foreach ($QTable in $Sheet.QueryTables) {
+            #         $QTable.BackgroundQuery = $false
+            #     }
+            # }
+            foreach ($cnn in $workBook.Connections) {
+                if ($cnn.Type.ToString -eq "xlConnectionTypeODBC") {
+                    $cnn.ODBCConnection.BackgroundQuery = $false              
+                }
+                else {
+                    $cnn.OLEDBConnection.BackgroundQuery = $false
+                }
+            }
             $i = 1
             Do { 
                 $workBook.RefreshAll()
-                $conn = $workBook.Connections
-                while ($conn | ForEach-Object { if ($_.OLEDBConnection.Refreshing) { $true } }) {
+                while ($workBook | ForEach-Object { if ($_.OLEDBCConnection.Refreshing) { $true } }) {
                     Start-Sleep -Seconds 1
                 }
                 $i++
-            } while ($i -le 1) #Refresh all data twice in workbook.
+            } while ($i -le 1) #Refresh all data twice in workbook.    
+            foreach ($Sheet in $workBook.Worksheets) {
+                foreach ($QTable in $Sheet.QueryTables) {
+                    $QTable.BackgroundQuery = $true
+                }
+            }
             Write-Host "done." 
 
             Write-Host "Starting Calculate..." -NoNewline
             $excelObj.Calculation = $xlCalculationAutomatic
+            while ($excelObj.CalculationState -ne "xldone") {
+                Start-Sleep -Seconds 5
+            }
             Write-Host "done."
         }
         Write-Host "Saving file..." -nonewline
@@ -115,12 +139,15 @@ foreach ($file in $files) {
         #Close workbook.
         $workBook.Close()
         $excelObj.Quit()
+        Get-Process -Name “*Excel*” | Stop-Process
         $excelObj = $null
     }
     ## close all object references
     
     Release-Ref($workBook)
+    Remove-Variable workBook -ErrorAction SilentlyContinue
     Release-Ref($excelObj)
+    Remove-Variable excelObj -ErrorAction SilentlyContinue
     $end = Get-Date
     Write-Host -ForegroundColor Red ('Total Runtime: ' + ($end - $start).TotalSeconds)
     Write-Host "`n"
