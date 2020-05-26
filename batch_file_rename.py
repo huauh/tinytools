@@ -30,7 +30,7 @@ def batch_rename(source_dir, *targets):
 
 
 def main():
-    parts_one = ['e:', '/', 'FangCloudV2', '杭州初慕', '初慕表格系统', '库存分析', '资料链接']
+    parts_one = ['e:', '/', '杭州初慕', '初慕表格系统', '库存分析', '资料链接']
     parts_two = ['采购分析', '销量明细表', '源数据']
 
     path_one = Path(*parts_one)
