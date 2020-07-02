@@ -30,7 +30,7 @@ def batch_rename(source_dir, *targets):
 
 
 def main():
-    parts_one = ['e:', '/', 'FangCloudV2', '杭州初慕', '初慕表格系统', '库存分析', '资料链接']
+    parts_one = ['e:', '/', '杭州初慕', '初慕表格系统', '库存分析', '资料链接']
     parts_two = ['采购分析', '销量明细表', '源数据']
 
     path_one = Path(*parts_one)
@@ -40,7 +40,7 @@ def main():
     targets.append(path_one / 'O1_仓库库存.CSV')
     targets.append(path_one / 'O2_销量明细.CSV')
     targets.append(path_one / 'O4_本年销量.CSV')
-    targets.append(path_two / '销量明细-202005.CSV')
+    targets.append(path_two / '销量明细-202007.CSV')
     targets.append(path_one / 'O6_产品数据.CSV')
     targets.append(Path.cwd().parent.joinpath('网店产品.CSV'))
 
