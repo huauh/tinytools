@@ -30,19 +30,22 @@ def batch_rename(source_dir, *targets):
 
 
 def main():
-    parts_one = ['e:', '/', '杭州初慕', '初慕表格系统', '库存分析', '资料链接']
-    parts_two = ['采购分析', '销量明细表', '源数据']
+    parts_0 = ['e:', '/', '杭州初慕', '初慕表格系统']
+    parts_1 = ['库存分析', '资料链接']
+    parts_2 = ['采购分析', '销量明细表', '源数据']
+    parts_3 = ['运营事宜']
 
-    path_one = Path(*parts_one)
-    path_two = path_one.joinpath(*parts_two)
+    path_1 = Path(*parts_0).joinpath(*parts_1)
+    path_2 = Path(*parts_0).joinpath(*parts_1).joinpath(*parts_2)
+    path_3 = Path(*parts_0).joinpath(*parts_3)
 
     targets = []
-    targets.append(path_one / 'O1_仓库库存.CSV')
-    targets.append(path_one / 'O2_销量明细.CSV')
-    targets.append(path_one / 'O4_本年销量.CSV')
-    targets.append(path_two / '销量明细-202007.CSV')
-    targets.append(path_one / 'O6_产品数据.CSV')
-    targets.append(Path.cwd().parent.joinpath('网店产品.CSV'))
+    targets.append(path_1 / 'O1_仓库库存.CSV')
+    targets.append(path_1 / 'O2_销量明细.CSV')
+    targets.append(path_1 / 'O4_本年销量.CSV')
+    targets.append(path_2 / '销量明细-202007.CSV')
+    targets.append(path_1 / 'O6_产品数据.CSV')
+    targets.append(path_3 / ('网店产品.CSV'))
 
     batch_rename(Path.cwd(), *targets)
 
