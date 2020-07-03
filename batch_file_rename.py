@@ -36,16 +36,16 @@ def main():
     parts_3 = ['运营事宜']
 
     path_1 = Path(*parts_0).joinpath(*parts_1)
-    path_2 = Path(*parts_0).joinpath(*parts_1).joinpath(*parts_2)
+    path_2 = Path(*parts_0).joinpath(*parts_2)
     path_3 = Path(*parts_0).joinpath(*parts_3)
 
     targets = []
     targets.append(path_1 / 'O1_仓库库存.CSV')
     targets.append(path_1 / 'O2_销量明细.CSV')
-    targets.append(path_1 / 'O4_本年销量.CSV')
+    targets.append(path_1 / 'O3_本年销量.CSV')
+    targets.append(path_1 / 'O5_产品数据.CSV')
     targets.append(path_2 / '销量明细-202007.CSV')
-    targets.append(path_1 / 'O6_产品数据.CSV')
-    targets.append(path_3 / ('网店产品.CSV'))
+    targets.append(path_3 / '网店产品.CSV')
 
     batch_rename(Path.cwd(), *targets)
 
