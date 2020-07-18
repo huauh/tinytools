@@ -41,12 +41,12 @@ def main():
 
     targets = []
     # 目录路径添加顺序不能变，与从EDB下载的文件顺序一致
-    targets.append(path_1 / 'O1_仓库库存.CSV')
-    targets.append(path_1 / 'O2_销量明细.CSV')
-    targets.append(path_1 / 'O3_本年销量.CSV')
-    targets.append(path_2 / '销量明细-202007.CSV')
-    targets.append(path_1 / 'O5_产品数据.CSV')
-    targets.append(path_3 / '网店产品.CSV')
+    targets.append(path_1 / 'O1_仓库库存.csv')
+    targets.append(path_1 / 'O2_销量明细.csv')
+    targets.append(path_1 / 'O3_本年销量.csv')
+    targets.append(path_2 / '销量明细-202007.csv')
+    targets.append(path_1 / 'O5_产品数据.csv')
+    targets.append(path_3 / '网店产品.csv')
 
     batch_rename(Path.cwd(), *targets)
 
